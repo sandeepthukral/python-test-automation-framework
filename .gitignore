@@ -26,7 +26,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-.idea
+.idea/*
 .DS_Store
 .pytest_cache
 junit-report.xml
