@@ -1,6 +1,12 @@
+from enum import Enum
 from src.tests.base_test import BaseTest
 import src.tests.ui as tests_dir
 import os, inspect
+
+
+class BrowserSize(Enum):
+    mobile = (400, 900)
+    desktop = (1200, 900)
 
 class BaseUiTest(BaseTest):
     def setUp(self) -> None:
@@ -18,6 +24,10 @@ class BaseUiTest(BaseTest):
     @property
     def test_case_name(self) -> str:
         return self.__class__.__name__
+
+    @property
+    def screen_size(self) -> BrowserSize:
+        return BrowserSize.desktop
 
     @property
     def test_suite_name(self) -> str:
