@@ -1,5 +1,6 @@
 import unittest
 from src.utils.cached_property import cached_property
+from src.utils.webdriver.logging import start_logging
 from src.utils.webdriver.webdriver_factory import WebdriverFactory
 from src.utils.webdriver.webdriver_factory import BrowserName
 
@@ -7,7 +8,7 @@ from src.utils.webdriver.webdriver_factory import BrowserName
 class BaseTest(unittest.TestCase):
     def setUp(self) -> None:
         super().setUp()
-        # More will come here later
+        start_logging()
 
     def tearDown(self) -> None:
         super().tearDown()
