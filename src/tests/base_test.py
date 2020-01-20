@@ -1,5 +1,9 @@
 import unittest
+
+from src.config import ConfigUi
 from src.utils.cached_property import cached_property
+from src.utils.reporter.console_reporter import ConsoleReporter
+from src.utils.reporter.reporter_provider import get_reporter
 from src.utils.webdriver.logging import start_logging
 from src.utils.webdriver.webdriver_factory import WebdriverFactory
 from src.utils.webdriver.webdriver_factory import BrowserName
@@ -26,3 +30,12 @@ class BaseTest(unittest.TestCase):
 
     def finish_webdriver(self) -> None:
         self.webdriver.finish()  # Close webdriver instance.
+
+    @cached_property
+    def reporter(self) -> ConsoleReporter:
+        self.addCleanup(self.finish_reporting)
+        return get_reporter(ConfigUi.reporter_type(), ConfigUi.report_dir())
+
+    def finish_reporting(self):
+        self.reporter.finish_case()
+        self.reporter.finish_suite()
