@@ -8,6 +8,7 @@ class BrowserSize(Enum):
     mobile = (400, 900)
     desktop = (1200, 900)
 
+
 class BaseUiTest(BaseTest):
     def setUp(self) -> None:
         super().setUp()

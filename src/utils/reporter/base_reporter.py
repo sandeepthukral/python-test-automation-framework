@@ -9,6 +9,10 @@ class BaseReporter(object):
         self.output_dir = output_dir
 
     @abstractmethod
+    def step(self, message: str) -> 'StepContext':
+        return StepContext(self.start_step, self.finish_step, message)  # type: ignore
+
+    @abstractmethod
     def is_case_failed(self) -> bool:
         pass
 
@@ -71,3 +75,17 @@ class BaseReporter(object):
                 os.unlink(directory_file)
             except OSError as error:
                 logging.error(f'Failed to unlink: {directory_file}. {error}')
+
+
+class StepContext:
+
+    def __init__(self, start_step_callback, stop_step_callback, message):  # type: ignore
+        self.message = message
+        self.start_step_callback = start_step_callback
+        self.stop_step_callback = stop_step_callback
+
+    def __enter__(self) -> None:
+        self.start_step_callback(self.message)
+
+    def __exit__(self, error_type, value, err_traceback):  # type: ignore
+        self.stop_step_callback(error_type, value, err_traceback)
